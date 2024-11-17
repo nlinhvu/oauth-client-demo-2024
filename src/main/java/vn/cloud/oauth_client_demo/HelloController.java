@@ -10,6 +10,6 @@ public class HelloController {
 
     @GetMapping
     String hello(@AuthenticationPrincipal OAuth2User oAuth2User) {
-        return "Hello %s".formatted(oAuth2User.getAttributes());
+        return "Hello %s".formatted(oAuth2User.getName());
     }
 }

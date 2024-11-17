@@ -30,6 +30,9 @@ export GITHUB_CLIENT_SECRET=your_github_client_secret
 
 6. Visit http://localhost:8080
 
+## GitHub Authorization Code Flow
+![GitHub](./images/oauth2-code-github.png)
+
 ## References
 - `1.` **OAuth 2.0 Login** in [**Spring Official Documentation**](https://docs.spring.io/spring-security/reference/servlet/oauth2/login/index.html).
 - `2.` **OAuth 2.0 Login - Core Configuration** in [**Spring Official Documentation**](https://docs.spring.io/spring-security/reference/servlet/oauth2/login/core.html).
