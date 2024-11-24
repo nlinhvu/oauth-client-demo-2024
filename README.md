@@ -30,6 +30,9 @@ export GITHUB_CLIENT_SECRET=your_github_client_secret
 
 6. Visit http://localhost:8080
 
+## Google OpenID Authorization Code Flow
+![Google](./images/oauth2-code-google.png)
+
 ## GitHub Authorization Code Flow
 ![GitHub](./images/oauth2-code-github.png)
 
