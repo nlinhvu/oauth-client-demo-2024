@@ -34,6 +34,15 @@ spring:
             client-authentication-method: client_secret_basic
             authorization-grant-type: authorization_code
             client-name: Complete Google Client Registration
+          my-inhouse-authz:
+            client-id: pkce-client
+            scope:
+              - openid
+              - profile
+            redirect-uri: http://127.0.0.1:8080/login/oauth2/code/pkce-client
+            client-authentication-method: none
+            authorization-grant-type: authorization_code
+            client-name: My In-house Authorization Server
 
         provider:
           my-github:
@@ -45,6 +54,9 @@ spring:
             authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
             token-uri: https://oauth2.googleapis.com/token
             jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+            user-name-attribute: sub
+          my-inhouse-authz:
+            issuer-uri: http://localhost:9000
             user-name-attribute: sub
 
 logging:
