@@ -2,6 +2,19 @@ spring:
   application:
     name: oauth-client-demo
 
+
+  cloud:
+    gateway:
+      mvc:
+        http-client:
+          connect-timeout: 5000
+          read-timeout: 10000
+        routes:
+        - id: react_route
+          uri: http://localhost:3200
+          predicates:
+            - Path=/**
+
   security:
     oauth2:
       client:
@@ -59,6 +72,16 @@ spring:
             issuer-uri: http://localhost:9000
             user-name-attribute: sub
 
+  threads:
+    virtual:
+      enabled: true
+
 logging:
   level:
     org.springframework.security: TRACE
+    org.springframework.cloud.gateway: TRACE
+    org:
+      springframework:
+        web:
+          servlet: TRACE
+          client: TRACE
