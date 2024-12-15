@@ -2,12 +2,17 @@ package vn.cloud.oauth_client_demo;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
+import org.springframework.security.oauth2.client.endpoint.RestClientAuthorizationCodeTokenResponseClient;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.util.LinkedMultiValueMap;
 
 import java.util.function.Consumer;
 
@@ -48,5 +53,24 @@ public class OAuth2Configuration {
         authorizationRequestResolver.setAuthorizationRequestCustomizer(authorizationRequestCustomizer());
 
         return authorizationRequestResolver;
+    }
+
+    @Bean
+    public OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient() {
+        RestClientAuthorizationCodeTokenResponseClient tokenResponseClient = new RestClientAuthorizationCodeTokenResponseClient();
+
+        tokenResponseClient.addParametersConverter(codeGrantRequest -> {
+            LinkedMultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+            parameters.set("realm", "invoice-realm");
+            return parameters;
+        });
+
+        tokenResponseClient.addHeadersConverter(codeGrantRequest -> {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.USER_AGENT, "my-user-agent");
+            return headers;
+        });
+
+        return tokenResponseClient;
     }
 }
